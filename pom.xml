@@ -26,13 +26,14 @@
     	<version>3.3.0</version>
     </dependency>
   </dependencies>
+  
   <name>Java-MongoDB-DevOps</name>
   <build>
   	<plugins>
   		<plugin>
   			<groupId>org.codehaus.mojo</groupId>
   			<artifactId>exec-maven-plugin</artifactId>
-  			<version>1.2.1</version>
+  			<version>1.5.0</version>
   			<configuration>
 				<mainClass>org.sachin.devops.mongodb.trials.Trial</mainClass>
 			</configuration>

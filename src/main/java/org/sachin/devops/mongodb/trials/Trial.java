@@ -5,9 +5,13 @@ package org.sachin.devops.mongodb.trials;
 
 import static java.util.Arrays.asList;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Properties;
 
 import org.bson.Document;
 import org.sachin.devops.mongodb.dao.MongoDBDAOImpl;
@@ -23,7 +27,7 @@ import com.mongodb.client.MongoDatabase;
  */
 public class Trial {
 
-	private static String HOST="192.168.30.15";//"127.0.0.1";
+	private static String HOST="127.0.0.1";
 	private static int PORT=27017;
 	
 	private MongoDBDAOImpl dbDAOImpl;
@@ -36,14 +40,27 @@ public class Trial {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
-		Trial trial = new Trial();
-		trial.getDBDAO();
-		trial.getMongoClient();
-		trial.getDatabase();
-		trial.prepareDocument();
-		//trial.insertDocument();
-		trial.printAllDocuments();		
+		try{
+			Trial trial = new Trial();
+			trial.readProperties();
+			trial.getDBDAO();
+			trial.getMongoClient();
+			trial.getDatabase();
+			trial.prepareDocument();
+			//trial.insertDocument();
+			trial.printAllDocuments();
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+	}
+	
+	public void readProperties() throws Exception{		
+		Properties prop = new Properties();
+		File f = new File("./resources/config.properties");
+		InputStream is = new FileInputStream(f);
+		prop.load(is);
+		HOST = prop.getProperty("dbHost");
+		PORT = Integer.parseInt(prop.getProperty("dbPort"));	
 	}
 	
 	public void getDBDAO() {
